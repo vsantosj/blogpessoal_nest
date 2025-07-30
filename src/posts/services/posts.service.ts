@@ -2,25 +2,25 @@
 import { HttpException, HttpStatus, Injectable} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, ILike, DeleteResult } from 'typeorm';
-import { Post } from '../entities/post.entity';
+import { Posts } from '../entities/posts.entity';
 
 
 
 @Injectable()
 export class PostsService {
   constructor(
-    @InjectRepository(Post)
-    private postRepository: Repository<Post>,
+    @InjectRepository(Posts)
+    private postsRepository: Repository<Posts>,
   ) {}
 
-  async findAll(): Promise<Post[]> {
-    return await this.postRepository.find({
+  async findAll(): Promise<Posts[]> {
+    return await this.postsRepository.find({
     });
   }
 
 
-  async findById(id: number): Promise<Post> {
-    const post = await this.postRepository.findOne({ 
+  async findById(id: number): Promise<Posts> {
+    const post = await this.postsRepository.findOne({ 
       where: { id } 
     });
     
@@ -31,8 +31,8 @@ export class PostsService {
     return post;
   }
 
-  async findByTitle(title: string): Promise<Post[]> {
-    return await this.postRepository.find({
+  async findByTitle(title: string): Promise<Posts[]> {
+    return await this.postsRepository.find({
       where: { 
         title: ILike(`%${title}%`) 
       }
@@ -40,20 +40,20 @@ export class PostsService {
     })
   }
 
-  async create( post: Post): Promise<Post> {
-    return await this.postRepository.save(post);
+  async create( post: Posts): Promise<Posts> {
+    return await this.postsRepository.save(post);
   }
 
 
-  async update(post: Post): Promise<Post> {
+  async update(post: Posts): Promise<Posts> {
         await this.findById(post.id);
     
-    return await this.postRepository.save(post);
+    return await this.postsRepository.save(post);
   }
 
   async delete(id: number): Promise<DeleteResult> {
         await this.findById(id);
         
-        return await this.postRepository.delete(id);
+        return await this.postsRepository.delete(id);
   }
 }
