@@ -1,3 +1,4 @@
+import { ThemeService } from './../../theme/service/theme.service';
 import { HttpException, HttpStatus, Injectable} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, ILike, DeleteResult } from 'typeorm';
@@ -10,6 +11,7 @@ export class PostsService {
   constructor(
     @InjectRepository(Posts)
     private postRepository: Repository<Posts>,
+    private themeService: ThemeService,
   ) {}
 
   async findAll(): Promise<Posts[]> {
@@ -39,7 +41,7 @@ export class PostsService {
   async findByTitle(title: string): Promise<Posts[]> {
     return await this.postRepository.find({
       where: { 
-        title: ILike(`%${title}%`) 
+        title: ILike(`%${title}%`)
       },
       relations:{
         theme:true
@@ -49,12 +51,15 @@ export class PostsService {
   }
 
   async create( post: Posts): Promise<Posts> {
+    await this.themeService.findById(post.theme.id);
     return await this.postRepository.save(post);
   }
 
 
   async update(post: Posts): Promise<Posts> {
         await this.findById(post.id);
+
+        await this.themeService.findById(post.theme.id)
     
     return await this.postRepository.save(post);
   }

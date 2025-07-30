@@ -41,7 +41,7 @@ export class ThemeService {
     async findByContent(content: string): Promise<Theme[]> {
         return await this.themeRepository.find({
             where: {
-                content: ILike(`%${content}%`)
+                theme: ILike(`%${content}%`)
             },
             relations: {
                 posts: true
@@ -64,6 +64,17 @@ export class ThemeService {
         return await this.themeRepository.save(theme);
     }
 
+    async update(theme: Theme): Promise<Theme> {
+        if (!theme.id) {
+            throw new HttpException(
+                'ID do tema é obrigatório para atualização!',
+                HttpStatus.BAD_REQUEST
+            );
+        }
+        await this.findById(theme.id);
+
+        return await this.themeRepository.save(theme);
+    }
     async delete(id: number): Promise<Theme> {
         const theme = await this.findById(id);
         await this.themeRepository.delete(id);
