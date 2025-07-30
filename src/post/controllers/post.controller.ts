@@ -4,39 +4,38 @@ import { DeleteResult } from 'typeorm';
 
 @Controller('posts')
 export class PostsController {
-    constructor(private readonly postsService: PostsService) { }
+    constructor(private readonly postService: PostService) { }
 
     @Get()
-    @Put()
     @HttpCode(HttpStatus.OK)
     findAll(): Promise<Post[]> {
-        return this.postsService.findAll();
+        return this.postService.findAll();
     }
 
-    @Get(':id')
+    @Get('/:id')
     findById(@Param('id', ParseIntPipe) id: number): Promise<Post> {
-        return this.postsService.findById(id);
+        return this.postService.findById(id);
     }
 
     @Get('/titulo/:title')
-    findByTitle(@Query('title') title: string): Promise<Post[]> {
-        return this.postsService.findByTitle(title);
+    findByTitle(@Param('title') title: string): Promise<Post[]> {
+        return this.postService.findByTitle(title);
     }
 
     @Post()
     @HttpCode(HttpStatus.CREATED)
     create(@Body() post: Post): Promise<Post> {
-        return this.postsService.create(post);
+        return this.postService.create(post);
     }
 
     @Put()
     @HttpCode(HttpStatus.OK)
     update(@Body() post: Post): Promise<Post> {
-        return this.postsService.update(post);
+        return this.postService.update(post);
     }
 
-    @Delete(':id')
+    @Delete('/:id')
     delete(@Param('id', ParseIntPipe) id: number): Promise<DeleteResult> {
-        return this.postsService.delete(id);
+        return this.postService.delete(id);
     }
 }
