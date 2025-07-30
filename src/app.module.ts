@@ -3,6 +3,8 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PostsModule } from './posts/posts.module';
 import { Posts } from './posts/entities/posts.entity';
+import { ThemeModule } from './theme/theme.module';
+import { Theme } from './theme/entities/theme.entity';
 
 @Module({
   imports: [
@@ -16,11 +18,11 @@ import { Posts } from './posts/entities/posts.entity';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [Posts],
+      entities: [Posts, Theme],
       synchronize: process.env.NODE_ENV === 'development',
       logging: process.env.NODE_ENV === 'development',
     }),
-    PostsModule,
+    PostsModule, ThemeModule,
   ],
   controllers: [],
   providers: [],
