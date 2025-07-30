@@ -2,7 +2,8 @@
 import { HttpException, HttpStatus, Injectable} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, ILike, DeleteResult } from 'typeorm';
-import { Post } from './entities/post.entity';
+import { Post } from '../entities/post.entity';
+
 
 
 @Injectable()
