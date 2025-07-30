@@ -1,0 +1,72 @@
+import { InjectRepository } from '@nestjs/typeorm';
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { ILike, Repository } from 'typeorm';
+import { Theme } from '../themes/entities/theme.entity.ts'
+
+
+@Injectable()
+export class ThemeService {
+
+    constructor(
+        @InjectRepository(Theme)
+        private themeRepository: Repository<Theme>
+    ) { }
+
+    async findAll(): Promise<Theme[]> {
+        return await this.themeRepository.find({
+            relations: {
+                posts: true
+            }
+        });
+    }
+
+    async findById(id: number): Promise<Theme> {
+        let theme = await this.themeRepository.findOne({
+            where: {
+                id
+            },
+            relations: {
+                posts: true
+            }
+        });
+
+        if (!theme)
+            throw new HttpException(
+                `O tema com ID: ${id} não foi encontrado!`, HttpStatus.NOT_FOUND
+            );
+
+        return theme;
+    }
+
+    async findByContents(contents: string): Promise<Theme> {
+        return await this.themeRepository.find({
+            where: {
+                contents: ILike(`%${contents}%`)
+            },
+            relations: {
+                posts: true
+            }
+        });
+    }
+
+    async create(theme: Theme): Promise<Theme> {
+        if (theme.id) {
+            const existsTheme = await this.themeRepository.findOne({
+                where: { id: theme.id }
+            });
+            if (existsTheme) {
+                throw new HttpException(
+                    `Tema com ID: ${theme.id} já existe!`,
+                    HttpStatus.CONFLICT
+                );
+            }
+        }
+        return await this.themeRepository.save(theme);
+    }
+
+    async delete(id: number): Promise<Theme> {
+        const theme = await this.findById(id);
+        await this.themeRepository.delete(id);
+        return theme;
+    }
+}
