@@ -5,6 +5,7 @@ import { PostsModule } from './posts/posts.module';
 import { Posts } from './posts/entities/posts.entity';
 import { ThemeModule } from './theme/theme.module';
 import { Theme } from './theme/entities/theme.entity';
+import { AuthModule } from './auth/auth.modules';
 
 @Module({
   imports: [
@@ -22,7 +23,7 @@ import { Theme } from './theme/entities/theme.entity';
       synchronize: process.env.NODE_ENV === 'development',
       logging: process.env.NODE_ENV === 'development',
     }),
-    PostsModule, ThemeModule,
+    PostsModule, ThemeModule, AuthModule,
   ],
   controllers: [],
   providers: [],
