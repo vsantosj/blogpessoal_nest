@@ -6,6 +6,8 @@ import { Posts } from './posts/entities/posts.entity';
 import { ThemeModule } from './theme/theme.module';
 import { Theme } from './theme/entities/theme.entity';
 import { AuthModule } from './auth/auth.modules';
+import { UserModule } from './user/user.module';
+import { User } from './user/entities/user.entities';
 
 @Module({
   imports: [
@@ -19,11 +21,11 @@ import { AuthModule } from './auth/auth.modules';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [Posts, Theme],
+      entities: [Posts, Theme, User],
       synchronize: process.env.NODE_ENV === 'development',
       logging: process.env.NODE_ENV === 'development',
     }),
-    PostsModule, ThemeModule, AuthModule,
+    PostsModule, ThemeModule, AuthModule, UserModule,
   ],
   controllers: [],
   providers: [],

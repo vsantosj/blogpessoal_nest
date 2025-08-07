@@ -17,7 +17,8 @@ export class PostsService {
   async findAll(): Promise<Posts[]> {
     return await this.postRepository.find({
       relations: {
-        theme: true
+        theme: true,
+        user: true
       }
     });
   }
@@ -44,7 +45,8 @@ export class PostsService {
         title: ILike(`%${title}%`)
       },
       relations:{
-        theme:true
+        theme:true,
+        user: true
       }
 
     });

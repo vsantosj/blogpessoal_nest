@@ -1,6 +1,7 @@
 import { IsNotEmpty } from "class-validator";
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToMany, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Theme } from "../../theme/entities/theme.entity";
+import { User } from "../../user/entities/user.entities";
 
 @Entity({ name: "tb_posts" })
 export class Posts {
@@ -22,13 +23,17 @@ export class Posts {
     @UpdateDateColumn()
     updated_at: Date;
 
-        //Relaciona a classe Theme com a atual, criando um objeto theme dentro dela. Quando o tema for deletado, seus posts também serão removidos (onDelete: 'CASCADE').
-        //Criar objeto na classe theme
-        @ManyToOne( () => Theme, (theme) => theme.posts, {
+    @ManyToOne(() => Theme, (theme) => theme.posts, {
         onDelete: "CASCADE"
     })
-    
-    @JoinColumn({name: 'theme_id'})
+
+    @JoinColumn({ name: 'theme_id' })
     theme: Theme
+
+    @ManyToOne(() => User, (user) => user.post, {
+        onDelete: "CASCADE"
+    })
+    @JoinColumn({ name: 'user_id' })
+    user: User
 
 }
