@@ -47,7 +47,7 @@ export class UserService {
         if (buscaUsuario)
             throw new HttpException("O User já existe!", HttpStatus.BAD_REQUEST);
 
-        user.password = await this.bcrypt.encriptyPasswor(user.password)
+        user.password = await this.bcrypt.encryptPassword(user.password)
         return await this.userRepository.save(user);
 
     }
@@ -64,7 +64,7 @@ export class UserService {
         if (findUser && findUser.id !== user.id)
             throw new HttpException('Usuário (e-mail) já Cadastrado!', HttpStatus.BAD_REQUEST);
 
-        user.password = await this.bcrypt.encriptyPasswor(user.password)
+        user.password = await this.bcrypt.encryptPassword(user.password)
         return await this.userRepository.save(user);
 
     }

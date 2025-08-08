@@ -28,7 +28,8 @@ export class PostsService {
     const posts = await this.postRepository.findOne({ 
       where: { id } ,
       relations:{
-        theme:true
+        theme:true,
+        user:true,
       }
     });
     
