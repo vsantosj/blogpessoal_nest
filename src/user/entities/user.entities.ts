@@ -1,7 +1,6 @@
 import { IsEmail, IsNotEmpty, MinLength } from "class-validator"
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm"
 import { Posts } from "../../posts/entities/posts.entity"
-import { Exclude } from "class-transformer"
 
 
 @Entity({name: "tb_users"})

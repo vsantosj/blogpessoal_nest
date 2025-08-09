@@ -6,7 +6,7 @@ import { jwtConstants } from "./constants/constants";
 import { AuthController } from "./controllers/auth.controller";
 import { LocalStrategy } from "./strategy/local.strategy";
 import { UserModule } from "../user/user.module";
-import { AuthService } from "./services/auth.services";
+import { AuthService } from "./services/auth.service";
 import { JwtStrategy } from "./strategy/jwt.strategy";
 
 @Module({

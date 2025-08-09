@@ -34,45 +34,29 @@ export class AuthService {
             }
             console.error('Erro no validateUser:', error);
             throw new HttpException(
-                'Erro interno no servidor durante validação', 
+                'Erro interno no servidor durante validação',
                 HttpStatus.INTERNAL_SERVER_ERROR
             );
         }
     }
 
     async login(userLogin: UserLogin) {
-        try {
-            const findUser = await this.userService.findByUser(userLogin.user);
+        const payload = { sub: userLogin.user };
 
-            if (!findUser) {
-                throw new HttpException('Usuário não encontrado', HttpStatus.NOT_FOUND);
-            }
+        const fyndUser = await this.userService.findByUser(
+            userLogin.user,
+        );
 
-            const payload = { 
-                sub: findUser.id,  
-                user: userLogin.user,
-                name: findUser.name
-            };
+        if (!fyndUser)
+            throw new HttpException("Usuário não encontrado!", HttpStatus.NOT_FOUND);
 
-            const token = this.jwtService.sign(payload);
-
-            return {
-                id: findUser.id,
-                name: findUser.name,
-                user: findUser.user, 
-                photoUrl: findUser.photoUrl,
-                token: `Bearer ${token}`,
-            };
-
-        } catch (error) {
-            if (error instanceof HttpException) {
-                throw error;
-            }
-            console.error('Erro no login:', error);
-            throw new HttpException(
-                'Erro interno no servidor durante login', 
-                HttpStatus.INTERNAL_SERVER_ERROR
-            );
-        }
+        return {
+            id: fyndUser.id,
+            name: fyndUser.name,
+            user: userLogin.user,
+            password: "",
+            photoUrl: fyndUser.photoUrl,
+            token: `Bearer ${this.jwtService.sign(payload)}`,
+        };
     }
 }
