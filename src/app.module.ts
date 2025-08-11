@@ -7,7 +7,7 @@ import { ThemeModule } from './theme/theme.module';
 import { Theme } from './theme/entities/theme.entity';
 import { AuthModule } from './auth/auth.modules';
 import { UserModule } from './user/user.module';
-import { User } from './user/entities/user.entities';
+import { User } from './user/entities/user.entity';
 
 @Module({
   imports: [

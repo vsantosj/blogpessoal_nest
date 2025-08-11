@@ -11,7 +11,7 @@ export class Theme {
 
     @IsNotEmpty()
     @Column({ length: 255, nullable: false })
-    theme: string;
+    contentTheme: string;
 
     //lado 1, um tema terá muitas classes associadas
     @OneToMany(() => Posts, (posts) => posts.theme)

@@ -46,7 +46,7 @@ export class ThemeService {
     async findByContent(content: string): Promise < Theme[] > {
     const themeList =await this.themeRepository.find({
         where: {
-            theme: ILike(`%${content}%`)
+            contentTheme: ILike(`%${content}%`)
         },
         relations: {
             posts: true
