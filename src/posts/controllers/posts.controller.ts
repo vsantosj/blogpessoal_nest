@@ -4,9 +4,12 @@ import { DeleteResult } from 'typeorm';
 import { PostsService } from '../services/posts.service';
 import { Posts } from '../entities/posts.entity';
 import { JwtAuthGuard } from '../../auth/guard/jwt-auth.guard';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Posts')
 @UseGuards(JwtAuthGuard)
-@Controller('posts')
+@Controller("/posts")
+@ApiBearerAuth()
 export class PostsController {
     constructor(private readonly postsService: PostsService) { }
 
