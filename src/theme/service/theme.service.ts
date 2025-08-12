@@ -89,7 +89,7 @@ export class ThemeService {
     async delete(id: number): Promise<DeleteResult> {
         const theme = await this.themeRepository.findOne({ where: { id } });
         if (!theme) {
-            throw new NotFoundException(`Categoria com ID: ${id} não foi encontrada!`);
+            throw new NotFoundException(`Tema com ID: ${id} não foi encontrada!`);
         }
         return await this.themeRepository.delete(id);
     }
