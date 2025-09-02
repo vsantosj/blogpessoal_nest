@@ -38,7 +38,7 @@ export class Posts {
     theme: Theme
 
     @ApiProperty({ type: () => User })
-    @ManyToOne(() => User, (user) => user.post, {
+    @ManyToOne(() => User, (user) => user.posts, {
         onDelete: "CASCADE"
     })
     @JoinColumn({ name: 'user_id' })
